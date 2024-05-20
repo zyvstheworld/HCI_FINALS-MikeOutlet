@@ -139,17 +139,6 @@ const productButton = document.querySelector(".productButton");
 const payment = document.querySelector(".payment");
 const close = document.querySelector(".close");
 
-productButton.addEventListener("click", () => {
-  // Check if a size is selected before proceeding with the purchase
-  const selectedSize = document.querySelector(".size.selected");
-
-  if (selectedSize) {
-    payment.style.display = "flex";
-  } else {
-    alert("Please select a size before proceeding with the purchase!");
-  }
-});
-
 // Add event listener for size selection
 document.querySelector(".sizes").addEventListener("click", (event) => {
   if (event.target.classList.contains("size")) {
@@ -166,35 +155,67 @@ close.addEventListener("click", () => {
 
 document.addEventListener('DOMContentLoaded', () => {
   const cartItemsContainer = document.querySelector('.cart-items');
+  let totalPrice = 0;
 
-  window.addToCart = (productName, productPrice) => {
-      const cartItem = document.createElement('div');
-      cartItem.classList.add('cart-item');
-      cartItem.innerHTML = `
-          <span>${productName} - $${productPrice}</span>
-          <button class="removeButton" onclick="removeFromCart(this)">Remove</button>
-      `;
-      cartItemsContainer.appendChild(cartItem);
+   // Function to update total price
+   const updateTotalPrice = () => {
+    const totalElement = document.querySelector('.total-price');
+    totalElement.textContent = `Total: ₱${totalPrice.toLocaleString()}`;
   };
 
+  // Function to add item to cart
+  window.addToCart = (productName, productPrice, productSize) => {
+    const cartItem = document.createElement('div');
+    cartItem.classList.add('cart-item');
+    cartItem.innerHTML = `
+      <span>${productName} - Size: ${productSize} - ₱${productPrice.toLocaleString()}</span>
+      <button class="removeButton" onclick="removeFromCart(this)">Remove</button>
+    `;
+    cartItemsContainer.appendChild(cartItem);
+    totalPrice += productPrice;
+    updateTotalPrice();
+  };
+
+  // Function to remove item from cart
   window.removeFromCart = (button) => {
-      button.parentElement.remove();
+    button.parentElement.remove();
+    totalPrice -= productPrice;
+    updateTotalPrice();
   };
 
+  // Function to open checkout modal
   window.openCheckout = () => {
-      document.getElementById('checkoutModal').style.display = 'block';
+    document.getElementById('checkoutModal').style.display = 'block';
   };
 
+  // Function to close checkout modal
   window.closeCheckout = () => {
-      document.getElementById('checkoutModal').style.display = 'none';
+    document.getElementById('checkoutModal').style.display = 'none';
   };
 
+  // Event listener for checkout form submission
   document.getElementById('checkoutForm').addEventListener('submit', (event) => {
-      event.preventDefault();
-      alert('Payment processed successfully!');
-      document.getElementById('checkoutModal').style.display = 'none';
-      while (cartItemsContainer.firstChild) {
-          cartItemsContainer.removeChild(cartItemsContainer.firstChild);
-      }
+    event.preventDefault();
+    alert('Payment processed successfully!');
+    document.getElementById('checkoutModal').style.display = 'none';
+    while (cartItemsContainer.firstChild) {
+      cartItemsContainer.removeChild(cartItemsContainer.firstChild);
+    }
+    totalPrice = 0;
+    updateTotalPrice();
+  });
+
+  // Add to cart button functionality
+  document.querySelector(".productButton").addEventListener("click", () => {
+    const selectedSize = document.querySelector(".size.selected");
+    if (selectedSize) {
+      const productTitle = document.querySelector(".productTitle").textContent;
+      const productPrice = parseFloat(document.querySelector(".productPrice").textContent.replace('₱', '').replace(',', ''));
+      const productSize = selectedSize.textContent;
+      addToCart(productTitle, productPrice, productSize);
+    } else {
+      alert("Please select a size before proceeding with the purchase!");
+    }
   });
 });
+
