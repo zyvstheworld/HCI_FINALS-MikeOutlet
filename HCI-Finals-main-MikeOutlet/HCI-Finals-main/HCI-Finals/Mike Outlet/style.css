@@ -628,7 +628,7 @@ footer {
 .checkoutButton {
   width: 100%;
   padding: 10px;
-  background-color: #000;
+  background-color: #369e62;
   color: #fff;
   border: none;
   cursor: pointer;
@@ -683,7 +683,7 @@ footer {
 
 .modal-content button {
   padding: 10px 20px;
-  background-color: #000;
+  background-color: #369e62;
   color: #fff;
   border: none;
   cursor: pointer;
@@ -696,4 +696,14 @@ footer {
   right: 10px;
   font-size: 24px;
   cursor: pointer;
+}
+
+.size.selected {
+  background-color: black;
+  color: white;
+}
+
+.total-price {
+  font-weight: bold;
+  margin-top: 10px;
 }
