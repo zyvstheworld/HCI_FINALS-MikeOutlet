@@ -185,7 +185,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Function to open checkout modal
   window.openCheckout = () => {
-    document.getElementById('checkoutModal').style.display = 'block';
+    if (cartItemsContainer.children.length === 0) {
+      alert('Your cart is empty. Please add items to the cart before checking out.');
+    } else {
+      document.getElementById('checkoutModal').style.display = 'block';
+    }
   };
 
   // Function to close checkout modal
