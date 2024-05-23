@@ -157,8 +157,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const cartItemsContainer = document.querySelector('.cart-items');
   let totalPrice = 0;
 
-   // Function to update total price
-   const updateTotalPrice = () => {
+  // Function to update total price
+  const updateTotalPrice = () => {
     const totalElement = document.querySelector('.total-price');
     totalElement.textContent = `Total: ₱${totalPrice.toLocaleString()}`;
   };
@@ -169,7 +169,7 @@ document.addEventListener('DOMContentLoaded', () => {
     cartItem.classList.add('cart-item');
     cartItem.innerHTML = `
       <span>${productName} - Size: ${productSize} - ₱${productPrice.toLocaleString()}</span>
-      <button class="removeButton" onclick="removeFromCart(this)">Remove</button>
+      <button class="removeButton" onclick="removeFromCart(this, ${productPrice})">Remove</button>
     `;
     cartItemsContainer.appendChild(cartItem);
     totalPrice += productPrice;
@@ -177,7 +177,7 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   // Function to remove item from cart
-  window.removeFromCart = (button) => {
+  window.removeFromCart = (button, productPrice) => {
     button.parentElement.remove();
     totalPrice -= productPrice;
     updateTotalPrice();
@@ -217,5 +217,8 @@ document.addEventListener('DOMContentLoaded', () => {
       alert("Please select a size before proceeding with the purchase!");
     }
   });
+
+  updateTotalPrice();
 });
+
 
