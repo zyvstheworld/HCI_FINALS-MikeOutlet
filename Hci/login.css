@@ -8,7 +8,7 @@ body {
     align-items: center;
     height: 100vh;
     margin: 0;
-    background: linear-gradient(135deg, #0b0b0b 0%, #001892 100%);
+    background: linear-gradient(135deg, #0b0b0b 0%, #009205 100%);
     background-attachment: fixed;
 }
 
@@ -58,7 +58,7 @@ body {
 button {
     width: 100%;
     padding: 10px;
-    background-color: rgba(63, 94, 251, 0.8);
+    background-color: rgba(35, 36, 35, 0.8);
     color: white;
     border: none;
     border-radius: 10px;
